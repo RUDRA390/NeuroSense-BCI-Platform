@@ -4,6 +4,4 @@ flask-cors
 gunicorn
 numpy
 scipy
-joblib
 xgboost
-scikit-learn
