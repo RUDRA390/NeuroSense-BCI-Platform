@@ -1,0 +1,7 @@
+node_modules/
+.neurosense/
+neurosense/
+Mentor/inference.py
+Mentor/models/generic_eegnet_package.pt
+**/__pycache__/
+.git/
