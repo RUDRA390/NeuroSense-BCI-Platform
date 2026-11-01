@@ -20,3 +20,10 @@ dist/
 
 # Temporary EEG uploads
 _temp_stress_eeg.mat
+# EEG sample and participant data
+Mentor/test_data/
+
+# Python virtual environments
+Mentor/.venv312/
+Mentor/__pycache__/
+Mentor/api/__pycache__/
