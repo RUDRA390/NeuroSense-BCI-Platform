@@ -14,15 +14,13 @@ Pipeline:
         -> Non-Stress / Stress
 """
 
+import json
 from pathlib import Path
 
-import joblib
 import numpy as np
 import xgboost as xgb
 
 from scipy.io import loadmat
-from scipy.signal import butter, filtfilt
-from scipy.stats import skew, kurtosis
 
 
 # ==========================================================
@@ -33,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent
 MODEL_DIR = BASE_DIR / "models"
 
 MODEL_PATH = MODEL_DIR / "xgboost_stress_model.json"
-SCALER_PATH = MODEL_DIR / "scaler.pkl"
+SCALER_PATH = MODEL_DIR / "scaler.json"
 
 
 # ==========================================================
@@ -68,7 +66,11 @@ if not SCALER_PATH.exists():
 stress_model = xgb.XGBClassifier()
 stress_model.load_model(MODEL_PATH)
 
-stress_scaler = joblib.load(SCALER_PATH)
+with SCALER_PATH.open() as scaler_file:
+    scaler_metadata = json.load(scaler_file)
+
+scaler_mean = np.asarray(scaler_metadata["mean"], dtype=np.float64)
+scaler_scale = np.asarray(scaler_metadata["scale"], dtype=np.float64)
 
 
 # ==========================================================
@@ -91,19 +93,10 @@ def bandpass_filter(
     low = lowcut / nyquist
     high = highcut / nyquist
 
-    b, a = butter(
-        order,
-        [low, high],
-        btype="band",
-    )
-
-    filtered = filtfilt(
-        b,
-        a,
-        signal_data,
-    )
-
-    return filtered
+    frequencies = np.fft.rfftfreq(signal_data.size, d=1 / fs)
+    spectrum = np.fft.rfft(signal_data)
+    spectrum[(frequencies < lowcut) | (frequencies > highcut)] = 0
+    return np.fft.irfft(spectrum, n=signal_data.size)
 
 
 # ==========================================================
@@ -197,16 +190,20 @@ def extract_features(eeg_signal: np.ndarray) -> np.ndarray:
     features = []
 
     for channel in eeg_signal:
-
+        mean = np.mean(channel)
+        centered = channel - mean
+        standard_deviation = np.std(channel)
+        variance = np.var(channel)
+        safe_standard_deviation = max(standard_deviation, np.finfo(float).eps)
         features.extend([
-            np.mean(channel),
-            np.std(channel),
-            np.var(channel),
+            mean,
+            standard_deviation,
+            variance,
             np.sqrt(np.mean(channel ** 2)),
             np.max(channel),
             np.min(channel),
-            skew(channel),
-            kurtosis(channel),
+            np.mean(centered ** 3) / safe_standard_deviation ** 3,
+            np.mean(centered ** 4) / safe_standard_deviation ** 4 - 3,
         ])
 
     feature_vector = np.asarray(features, dtype=np.float64)
@@ -291,9 +288,7 @@ def predict_stress(eeg_signal: np.ndarray) -> dict:
     )
 
     # 4. Scale with the SAVED scaler
-    scaled_features = stress_scaler.transform(
-        features_2d
-    )
+    scaled_features = (features_2d - scaler_mean) / scaler_scale
 
     # 5. XGBoost prediction
     prediction = stress_model.predict(
@@ -360,7 +355,7 @@ if __name__ == "__main__":
     print()
     print("Model features:", stress_model.n_features_in_)
     print("Model classes:", stress_model.classes_)
-    print("Scaler features:", len(stress_scaler.mean_))
+    print("Scaler features:", len(scaler_mean))
 
     print()
     print("Preprocessing:")

@@ -2,6 +2,4 @@ flask
 flask-cors
 numpy
 scipy
-joblib
 xgboost
-scikit-learn
