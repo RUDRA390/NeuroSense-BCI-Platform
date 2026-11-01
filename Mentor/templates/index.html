@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NeuroSense Motor Imagery</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🧠 NeuroSense Motor Imagery Prediction</h1>
+
+    <p>
+        Upload an EEG trial (.npy) and let EEGNet predict the imagined movement.
+    </p>
+
+    <div class="card">
+
+        <label>Select Model</label>
+
+        <select id="model">
+
+            {% for model in model_names %}
+                <option value="{{model}}">
+                    {{model}}
+                </option>
+            {% endfor %}
+
+        </select>
+
+        <br><br>
+
+        <label>Upload EEG Trial (.npy)</label>
+
+        <input
+            type="file"
+            id="trialFile"
+            accept=".npy">
+
+        <br><br>
+
+        <button id="predictBtn">
+            Predict
+        </button>
+
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,1497 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#0f172a;
+  color:white;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+.app{
+  padding:30px;
+}
+
+/******** HEADER ********/
+
+.header{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.header-icon{
+  font-size:48px;
+  color:#38bdf8;
+  margin-bottom:12px;
+}
+
+.header h1{
+  font-size:46px;
+  font-weight:700;
+  color:white;
+}
+
+.header p{
+  margin-top:12px;
+  color:#94a3b8;
+  font-size:18px;
+}
+
+.header-line{
+  width:180px;
+  height:4px;
+  margin:20px auto;
+  border-radius:10px;
+  background:#38bdf8;
+}
+
+.dashboard{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:#182235;
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  transition:.3s;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 18px 35px rgba(56,189,248,.15);
+}
+
+.card h2{
+  color:#38bdf8;
+  margin-bottom:18px;
+  font-size:22px;
+}
+
+.card p{
+  font-size:32px;
+  font-weight:bold;
+}
+
+/* ---------- Layout ---------- */
+
+.layout{
+  display:flex;
+  min-height:100vh;
+}
+
+.main{
+  flex:1;
+  padding:20px;
+  overflow:auto;
+}
+
+/* ---------- Sidebar ---------- */
+
+.sidebar{
+    width:270px;
+    background:#111827;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:30px 22px;
+    border-right:1px solid #1f2937;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:45px;
+}
+
+.logo-icon{
+    font-size:34px;
+    color:#38bdf8;
+}
+
+.logo h2{
+    color:white;
+    margin:0;
+    font-size:24px;
+}
+
+.logo span{
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.sidebar ul{
+    list-style:none;
+    padding:0;
+}
+
+.sidebar li{
+    margin-bottom:12px;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 18px;
+    color:#cbd5e1;
+    text-decoration:none;
+    border-radius:12px;
+    transition:.3s;
+}
+
+.sidebar a:hover{
+    background:#1e293b;
+    color:#38bdf8;
+    transform:translateX(5px);
+}
+
+.sidebar a.active{
+    background:#1e293b;
+    color:#38bdf8;
+    font-weight:600;
+}
+
+.backend-status{
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    background:#1e293b;
+
+    padding:16px;
+
+    border-radius:12px;
+
+    margin-top:30px;
+}
+
+.online-dot{
+    color:#22c55e;
+    font-size:12px;
+}
+
+.backend-status small{
+    color:#94a3b8;
+}
+
+.backend-status p{
+    margin:2px 0 0;
+}
+/* ---------- Patients Table ---------- */
+
+.patient-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:30px;
+  background:#1e293b;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.patient-table th,
+.patient-table td{
+  padding:15px;
+  text-align:left;
+  border-bottom:1px solid #334155;
+}
+
+.patient-table th{
+  background:#0f172a;
+  color:#38bdf8;
+}
+
+.patient-table tr:hover{
+  background:#273449;
+}
+/* ---------- Search ---------- */
+
+.search-box{
+  width:300px;
+  padding:12px;
+  margin:20px 0;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+}
+
+/* ---------- Status ---------- */
+
+.status{
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.status.active{
+  background:#16a34a;
+}
+
+.status.monitoring{
+  background:#ca8a04;
+}
+
+.status.completed{
+  background:#2563eb;
+}
+
+/* ---------- Button ---------- */
+
+.view-btn{
+  background:#38bdf8;
+  color:white;
+  border:none;
+  padding:8px 15px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.view-btn:hover{
+  background:#0ea5e9;
+}
+/* ---------- EEG Monitor ---------- */
+
+.chart-placeholder{
+  margin-top:40px;
+}
+
+.fake-chart{
+  margin-top:20px;
+  height:250px;
+  background:#111827;
+  border-radius:15px;
+  overflow:hidden;
+  position:relative;
+}
+
+.wave{
+  position:absolute;
+  width:200%;
+  height:2px;
+  top:50%;
+  left:0;
+  background:
+  repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 18px,
+      #38bdf8 20px,
+      transparent 22px,
+      transparent 40px
+  );
+
+  animation:moveWave 2s linear infinite;
+}
+
+@keyframes moveWave{
+  from{
+    transform:translateX(0);
+  }
+
+  to{
+    transform:translateX(-50%);
+  }
+}
+/* ---------- Reports ---------- */
+
+.reports{
+  padding:20px;
+}
+
+.report-card{
+  margin-top:25px;
+  background:#1e293b;
+  padding:30px;
+  border-radius:15px;
+  box-shadow:0 0 15px rgba(0,0,0,.35);
+}
+
+.report-card h2{
+  margin-bottom:25px;
+  color:#38bdf8;
+}
+
+.report-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:30px;
+}
+
+.report-table td{
+  padding:16px;
+  border-bottom:1px solid #334155;
+  font-size:20px;
+}
+
+.report-table td:first-child{
+  width:260px;
+  color:#38bdf8;
+}
+
+.download-btn{
+  background:#38bdf8;
+  color:white;
+  border:none;
+  padding:15px 35px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:18px;
+  transition:.3s;
+}
+
+.download-btn:hover{
+  background:#0ea5e9;
+}
+/* ---------- Settings ---------- */
+
+.settings{
+  padding:20px;
+}
+
+.settings-card{
+  margin-top:25px;
+  background:#1e293b;
+  padding:30px;
+  border-radius:15px;
+  max-width:650px;
+  box-shadow:0 0 15px rgba(0,0,0,.35);
+}
+
+.settings-card label{
+  display:block;
+  margin-top:20px;
+  margin-bottom:10px;
+  color:#38bdf8;
+  font-size:18px;
+}
+
+.settings-card select{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  font-size:16px;
+  margin-bottom:10px;
+}
+
+.checkbox{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:20px;
+  font-size:18px;
+}
+
+.checkbox input{
+  width:18px;
+  height:18px;
+}
+
+.save-btn{
+  margin-top:30px;
+  background:#38bdf8;
+  color:white;
+  border:none;
+  padding:15px 35px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:18px;
+  transition:.3s;
+}
+
+.save-btn:hover{
+  background:#0ea5e9;
+}
+/* ===========================
+   Motor Imagery Page
+=========================== */
+
+.mi-page{
+    max-width:850px;
+    margin:0 auto;
+    padding:40px 20px;
+}
+.mi-title{
+    font-size:2.8rem;
+    font-weight:700;
+    color:white;
+    margin-bottom:15px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.mi-page h1{
+    font-size: 2.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.mi-page p{
+    font-size:1.15rem;
+    color:#b9c3d3;
+    margin-bottom:25px;
+}
+
+.mi-card{
+    background:#1f2b45;
+    border-radius:18px;
+    padding:35px;
+    margin:30px auto;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.mi-card input[type=file]{
+    width:100%;
+    padding:14px;
+    border:2px dashed #3b82f6;
+    border-radius:12px;
+    background:#162038;
+    color:white;
+    margin-bottom:25px;
+}
+
+.predict-btn{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:#3b82f6;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.predict-btn:hover{
+    background:#2563eb;
+}
+
+.predict-btn:disabled{
+    background:#555;
+    cursor:not-allowed;
+}
+
+.result-card{
+    background:#1f2b45;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.result-card h2{
+    margin-bottom:25px;
+    border-bottom:2px solid #38bdf8;
+    padding-bottom:10px;
+    display:inline-block;
+}
+
+.result-card h1{
+    color:#38bdf8;
+    font-size:34px;
+    margin:8px 0;
+}
+
+.result-card p{
+    margin-top:10px;
+}
+
+.probability{
+    margin-top:25px;
+}
+
+.prob-label{
+    display:flex;
+    justify-content:space-between;
+    color:white;
+    margin-bottom:8px;
+    font-size:16px;
+}
+
+.bar{
+    width:100%;
+    height: 18px;
+    background:#374151;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.fill{
+    height:100%;
+    background:#38bdf8;
+    border-radius:20px;
+    transition:width .5s ease;
+}
+/* ===========================
+   Stress Analysis Page
+=========================== */
+
+.stress-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 35px 25px;
+}
+
+.stress-header {
+  margin-bottom: 30px;
+}
+
+.stress-header h1 {
+  color: white;
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.stress-header p {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.stress-card {
+  background: #1f2b45;
+  border-radius: 18px;
+  padding: 35px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stress-card h2 {
+  color: #38bdf8;
+  font-size: 1.7rem;
+  margin-bottom: 15px;
+}
+
+.stress-description {
+  color: #b9c3d3;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+/* ---------- File Upload ---------- */
+
+.upload-area {
+  margin-top: 20px;
+}
+
+.upload-area input[type="file"] {
+  width: 100%;
+  padding: 18px;
+  border: 2px dashed #38bdf8;
+  border-radius: 12px;
+  background: #162038;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.selected-file {
+  margin-top: 15px;
+  color: #cbd5e1;
+  font-size: 15px;
+  word-break: break-word;
+}
+
+/* ---------- Analyze Button ---------- */
+
+.stress-analyze-btn {
+  width: 100%;
+  margin-top: 25px;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: #38bdf8;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.stress-analyze-btn:hover {
+  background: #0ea5e9;
+  transform: translateY(-2px);
+}
+
+.stress-analyze-btn:disabled {
+  background: #475569;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---------- Error ---------- */
+
+.stress-error {
+  margin-top: 20px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: #3f1d2e;
+  color: #fecaca;
+  border: 1px solid #7f1d1d;
+}
+
+/* ---------- Result ---------- */
+
+.stress-result {
+  margin-top: 30px;
+  background: #182235;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.stress-result h2 {
+  border-bottom: 2px solid #38bdf8;
+  display: inline-block;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+}
+
+/* ---------- Main Result ---------- */
+
+.stress-main-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: #1e293b;
+  margin-bottom: 25px;
+}
+
+.stress-main-result span {
+  color: #94a3b8;
+  font-size: 16px;
+}
+
+.stress-main-result strong {
+  color: #f87171;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* ---------- Probability Bars ---------- */
+
+.stress-probabilities {
+  margin-top: 10px;
+}
+
+.probability-row {
+  margin-top: 22px;
+}
+
+.probability-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 9px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.probability-bar {
+  width: 100%;
+  height: 18px;
+  background: #374151;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.probability-fill {
+  height: 100%;
+  background: #38bdf8;
+  border-radius: 20px;
+  transition: width 0.6s ease;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+  .stress-page {
+    padding: 25px 15px;
+  }
+
+  .stress-card {
+    padding: 25px;
+  }
+
+  .stress-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .stress-main-result {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+/* =========================================
+   PATIENT SESSION PAGE
+   ========================================= */
+
+.patient-session-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.patient-session-page .stress-header {
+  margin-bottom: 20px;
+}
+
+.patient-session-page .stress-card {
+  padding: 28px;
+}
+
+.patient-session-page .stress-card h2 {
+  margin-bottom: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #38bdf8;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  background: #0f172a;
+  color: #f8fafc;
+  font-size: 14px;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #38bdf8;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-group-full {
+  grid-column: 1 / -1;
+}
+
+.demo-mode-box {
+  margin-top: 24px;
+  padding: 16px 18px;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  background: #111827;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.demo-mode-box strong {
+  color: #38bdf8;
+  font-size: 15px;
+}
+
+.demo-mode-box span {
+  color: #cbd5e1;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.patient-session-page .stress-analyze-btn {
+  margin-top: 22px;
+  width: 100%;
+}
+
+
+/* =========================================
+   ACTIVE PATIENT BANNER
+   ========================================= */
+
+.active-patient-banner {
+  grid-column: 1 / -1;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 24px;
+  margin-bottom: 6px;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  background: #172033;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.active-patient-banner span {
+  color: #38bdf8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.active-patient-banner h2 {
+  margin: 5px 0;
+  color: #f8fafc;
+  font-size: 22px;
+}
+
+.active-patient-banner p {
+  margin: 4px 0 0;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.active-patient-banner strong {
+  color: #38bdf8;
+  font-size: 14px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 800px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group-full {
+    grid-column: auto;
+  }
+
+  .active-patient-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* =========================================
+   HOME PAGE
+   ========================================= */
+
+.home-page {
+  position: relative;
+  min-height: calc(100vh - 40px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(56, 189, 248, 0.10), transparent 35%),
+    radial-gradient(circle at 15% 80%, rgba(59, 130, 246, 0.06), transparent 30%);
+}
+
+.home-content {
+  position: relative;
+  z-index: 5;
+  width: min(760px, 90%);
+  text-align: center;
+  padding: 30px;
+}
+
+.home-logo {
+  font-size: 56px;
+  margin-bottom: 10px;
+  animation: brainPulse 3s ease-in-out infinite;
+}
+
+.home-content h1 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.home-subtitle {
+  margin: 14px 0 0;
+  color: #38bdf8;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.home-description {
+  max-width: 650px;
+  margin: 18px auto 28px;
+  color: #cbd5e1;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.home-start-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 15px 28px;
+  background: #38bdf8;
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.20);
+}
+
+.home-demo-note {
+  width: fit-content;
+  max-width: 600px;
+  margin: 24px auto 0;
+  padding: 13px 18px;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  background: rgba(17, 24, 39, 0.75);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.home-demo-note strong {
+  color: #38bdf8;
+  font-size: 13px;
+}
+
+.home-demo-note span {
+  color: #94a3b8;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   FLOATING NEUROSCIENCE FACTS
+   ========================================= */
+
+.floating-facts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-fact {
+  position: absolute;
+  max-width: 230px;
+  padding: 11px 15px;
+  border: 1px solid rgba(56, 189, 248, 0.12);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.45);
+  color: rgba(148, 163, 184, 0.65);
+  font-size: 12px;
+  line-height: 1.5;
+  backdrop-filter: blur(4px);
+  animation: floatFact 12s ease-in-out infinite;
+}
+
+
+/* Different positions and timings */
+
+.fact-1 {
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.fact-2 {
+  top: 20%;
+  right: 6%;
+  animation-delay: 2s;
+}
+
+.fact-3 {
+  top: 72%;
+  left: 7%;
+  animation-delay: 4s;
+}
+
+.fact-4 {
+  bottom: 8%;
+  right: 8%;
+  animation-delay: 1s;
+}
+
+.fact-5 {
+  top: 46%;
+  left: 3%;
+  animation-delay: 5s;
+}
+
+.fact-6 {
+  top: 48%;
+  right: 3%;
+  animation-delay: 3s;
+}
+
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes floatFact {
+  0% {
+    transform: translateY(0px);
+    opacity: 0.45;
+  }
+
+  25% {
+    transform: translateY(-10px);
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: translateY(0px);
+    opacity: 0.55;
+  }
+
+  75% {
+    transform: translateY(10px);
+    opacity: 0.75;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 0.45;
+  }
+}
+
+@keyframes brainPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+
+/* =========================================
+   HOME PAGE RESPONSIVE
+   ========================================= */
+
+@media (max-width: 800px) {
+  .home-page {
+    padding: 20px;
+  }
+
+  .floating-fact {
+    display: none;
+  }
+
+  .home-logo {
+    font-size: 46px;
+  }
+
+  .home-content {
+    padding: 20px 10px;
+  }
+}
+/* Fix Home page heading overlap */
+
+.home-content h1 {
+  display: block;
+  margin: 0 auto;
+  max-width: 750px;
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.15;
+  letter-spacing: -1px;
+  white-space: normal;
+  overflow: visible;
+  position: relative;
+  z-index: 10;
+}
+.home-content {
+  position: relative;
+  z-index: 10;
+}
+/* =========================================
+   SESSION REPORT
+   ========================================= */
+
+.report-page {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.report-header {
+  margin-bottom: 20px;
+}
+
+.report-header h1 {
+  margin-bottom: 6px;
+  color: #f8fafc;
+}
+
+.report-header p {
+  color: #94a3b8;
+}
+
+.report-card {
+  padding: 28px;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  background: #111827;
+}
+
+.report-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #334155;
+}
+
+.report-title span {
+  color: #38bdf8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.report-title h2 {
+  margin: 5px 0 0;
+  color: #f8fafc;
+}
+
+.report-status {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #334155;
+  color: #38bdf8;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.report-section {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid #1e293b;
+}
+
+.report-section h3 {
+  margin-bottom: 18px;
+  color: #38bdf8;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.report-grid > div,
+.report-metric,
+.analysis-result-box {
+  padding: 15px;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  background: #0f172a;
+}
+
+.report-grid span,
+.report-metric span,
+.analysis-result-box span {
+  display: block;
+  margin-bottom: 6px;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.report-grid strong,
+.report-metric strong,
+.analysis-result-box strong {
+  color: #f8fafc;
+  font-size: 15px;
+}
+
+.report-full {
+  grid-column: 1 / -1;
+}
+
+.analysis-result-box {
+  margin-bottom: 12px;
+}
+
+.analysis-result-box strong {
+  font-size: 20px;
+}
+
+.report-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.report-note {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #172033;
+  color: #94a3b8;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.report-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.report-actions .stress-analyze-btn {
+  flex: 1;
+}
+
+.report-secondary-btn {
+  flex: 1;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  background: transparent;
+  color: #cbd5e1;
+  padding: 13px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.report-secondary-btn:hover {
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.report-empty {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.report-empty h1 {
+  color: #f8fafc;
+}
+
+.report-empty p {
+  margin: 12px 0 24px;
+  color: #94a3b8;
+}
+
+@media (max-width: 800px) {
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .report-full {
+    grid-column: auto;
+  }
+
+  .report-title {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .report-actions {
+    flex-direction: column;
+  }
+}
+/* =========================
+   SETTINGS PAGE
+========================= */
+
+.settings {
+  padding: 35px;
+  color: #ffffff;
+}
+
+.settings > h1 {
+  margin-bottom: 25px;
+  font-size: 32px;
+}
+
+.settings-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+  background: #1d2942;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.settings-section {
+  margin-bottom: 30px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.settings-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 20px;
+}
+
+.settings-section h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #4cc9f0;
+}
+
+.settings-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.settings-info-row:last-of-type {
+  border-bottom: none;
+}
+
+.settings-info-row span {
+  color: #aebbd1;
+  font-size: 14px;
+}
+
+.settings-info-row strong {
+  color: #ffffff;
+  font-size: 14px;
+  text-align: right;
+}
+
+.settings-demo-box {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 10px;
+  background: rgba(76, 201, 240, 0.08);
+  border-left: 4px solid #4cc9f0;
+}
+
+.settings-demo-box strong {
+  color: #4cc9f0;
+  font-size: 14px;
+}
+
+.settings-demo-box span {
+  color: #b9c4d6;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.settings-section label {
+  display: block;
+  margin-bottom: 8px;
+  color: #aebbd1;
+  font-size: 14px;
+}
+
+.settings-section select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border: 1px solid #35445f;
+  border-radius: 8px;
+  background: #111a2d;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+}
+
+.settings-section select:focus {
+  border-color: #4cc9f0;
+}
+
+.settings .checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.settings .checkbox input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #4cc9f0;
+}
+
+.settings .checkbox span {
+  color: #d7dfeb;
+  font-size: 14px;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: #3686f7;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.save-btn:hover {
+  background: #2675e6;
+}
+
+@media (max-width: 700px) {
+  .settings {
+    padding: 20px;
+  }
+
+  .settings-card {
+    padding: 20px;
+  }
+
+  .settings-info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .settings-info-row strong {
+    text-align: left;
+  }
+}
