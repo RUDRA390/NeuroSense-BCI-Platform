@@ -3,5 +3,5 @@ flask
 flask-cors
 gunicorn
 numpy
-scipy
+mat4py
 xgboost

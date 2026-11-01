@@ -1,5 +1,5 @@
 flask
 flask-cors
 numpy
-scipy
+mat4py
 xgboost

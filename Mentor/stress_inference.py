@@ -20,7 +20,7 @@ from pathlib import Path
 import numpy as np
 import xgboost as xgb
 
-from scipy.io import loadmat
+from mat4py import loadmat
 
 
 # ==========================================================
