@@ -2,4 +2,6 @@ flask
 flask-cors
 numpy
 scipy
+torch
 xgboost
+werkzeug

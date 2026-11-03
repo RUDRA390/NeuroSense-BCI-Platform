@@ -1,21 +1,3 @@
-import { FaBrain } from "react-icons/fa";
-
-function Header() {
-  return (
-    <div className="header">
-      <div className="header-icon">
-        <FaBrain />
-      </div>
-
-      <h1>NeuroSense BCI Platform</h1>
-
-      <p>
-        AI-Powered EEG Neurorehabilitation & Motor Imagery Analysis
-      </p>
-
-      <div className="header-line"></div>
-    </div>
-  );
-}
-
+import { FaBell, FaUserCircle } from "react-icons/fa";
+function Header() { return <header className="header"><p>Research workspace / <strong>NeuraHeal</strong></p><div className="header-user"><FaBell /><span>Dr. Alex Morgan<small>Researcher</small></span><FaUserCircle /></div></header>; }
 export default Header;
