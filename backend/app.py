@@ -1,5 +1,7 @@
 import csv
+import json
 import os
+import sqlite3
 import tempfile
 import time
 from datetime import datetime, timezone
@@ -17,8 +19,25 @@ CORS(app, resources={r"/api/*": {"origins": os.getenv("FRONTEND_ORIGIN", "*")}})
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODELS_DIR = os.path.join(BASE_DIR, "Mentor", "models")
 registry = ModelRegistry(MODELS_DIR)
-history = []
+DB_PATH = os.path.join(BASE_DIR, "neuraheal_history.sqlite3")
 ALLOWED_EXTENSIONS = {"npy", "csv"}
+
+def init_db():
+    with sqlite3.connect(DB_PATH) as connection:
+        connection.execute("CREATE TABLE IF NOT EXISTS analyses (id INTEGER PRIMARY KEY AUTOINCREMENT, payload TEXT NOT NULL, created_at TEXT NOT NULL)")
+        connection.commit()
+
+def save_history(payload):
+    with sqlite3.connect(DB_PATH) as connection:
+        connection.execute("INSERT INTO analyses (payload, created_at) VALUES (?, ?)", (json.dumps(payload), payload["analyzed_at"]))
+        connection.commit()
+
+def read_history():
+    with sqlite3.connect(DB_PATH) as connection:
+        rows = connection.execute("SELECT id, payload FROM analyses ORDER BY id DESC LIMIT 50").fetchall()
+    return [{**json.loads(payload), "id": row_id} for row_id, payload in rows]
+
+init_db()
 
 
 def load_signal(path, extension):
@@ -50,8 +69,7 @@ def analyze_file(uploaded_file):
         model = registry.get(request.form.get("model_name", "generic_eegnet_package"))
         result = model.predict(signal)
         result.update({"filename": filename, "n_channels": int(signal.shape[0]), "n_samples": int(signal.shape[1]), "processing_ms": round((time.perf_counter() - started) * 1000), "status": "completed", "analyzed_at": datetime.now(timezone.utc).isoformat()})
-        history.insert(0, result.copy())
-        del history[20:]
+        save_history(result.copy())
         return result
     finally:
         if temporary_path and os.path.exists(temporary_path):
@@ -81,7 +99,7 @@ def analyze():
 
 @app.get("/api/history")
 def get_history():
-    return jsonify({"items": history})
+    return jsonify({"items": read_history()})
 
 
 if __name__ == "__main__":
