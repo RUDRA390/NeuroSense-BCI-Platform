@@ -12,6 +12,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 from Mentor.inference import ModelRegistry
+from Mentor.stress_inference import predict_stress
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 50 * 1024 * 1024
@@ -66,8 +67,20 @@ def analyze_file(uploaded_file):
         signal = load_signal(temporary_path, extension)
         if not registry.models:
             raise RuntimeError("No packaged inference model is available in Mentor/models.")
-        model = registry.get(request.form.get("model_name", "generic_eegnet_package"))
-        result = model.predict(signal)
+        task = request.form.get("task", "motor-imagery")
+        if task == "stress":
+            result = predict_stress(signal)
+            result["task"] = "stress"
+            result["predicted_class"] = result["label"]
+            result["probabilities"] = {
+                "Stress": result["stress_probability"],
+                "Non-Stress": result["non_stress_probability"],
+            }
+            result["model_used"] = "xgboost_stress_model"
+        else:
+            model = registry.get(request.form.get("model_name", "generic_eegnet_package"))
+            result = model.predict(signal)
+            result["task"] = "motor-imagery"
         result.update({"filename": filename, "n_channels": int(signal.shape[0]), "n_samples": int(signal.shape[1]), "processing_ms": round((time.perf_counter() - started) * 1000), "status": "completed", "analyzed_at": datetime.now(timezone.utc).isoformat()})
         save_history(result.copy())
         return result
