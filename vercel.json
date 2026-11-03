@@ -1,4 +1,7 @@
 {
+  "installCommand": "cd neurosense && npm ci",
+  "buildCommand": "cd neurosense && npm run build",
+  "outputDirectory": "neurosense/dist",
   "functions": {
     "api/index.py": {
       "maxDuration": 60
