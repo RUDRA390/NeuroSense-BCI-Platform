@@ -1,109 +1,13 @@
 import { Routes, Route, useLocation } from "react-router-dom";
+import { useState } from "react";
 import Dashboard from "./pages/Dashboard";
-import Patients from "./pages/Patients";
 import EEGMonitor from "./pages/EEGMonitor";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
-import StressAnalysis from "./pages/StressAnalysis";
-
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
-
-import { useState } from "react";
-
 import "./App.css";
 
-function App() {
-  const location = useLocation();
-  const [eegData, setEegData] = useState({
-    status: "🟢 Connected",
-    load: "Optimal",
-    attention: "87%",
-    emotion: "😊 Calm",
-    engagement: "91%",
-    therapy: "Running",
-  });
-  const [miPrediction, setMiPrediction] = useState(null);
-  const [stressPrediction, setStressPrediction] = useState(null);
-  const [activePatient, setActivePatient] = useState(null);
-  const handleStartSession = (patient) => {
-    setMiPrediction(null);
-    setStressPrediction(null);
-    setActivePatient(patient);
-  };
-  return (
-    <div className="layout">
-
-      <Sidebar />
-
-      <div className="main">
-
-        {location.pathname !== "/" && <Header />}
-
-        <Routes>
-
-          <Route
-            path="/"
-            element={
-              <Dashboard
-                eegData={eegData}
-                miPrediction={miPrediction}
-                stressPrediction={stressPrediction}
-                activePatient={activePatient}
-              />
-            }
-          />
-
-          <Route
-            path="/patients"
-            element={
-              <Patients
-                onStartSession={handleStartSession}
-              />
-            }
-          />
-
-          <Route
-            path="/eeg"
-            element={
-              <EEGMonitor
-                onPrediction={setMiPrediction}
-                activePatient={activePatient}
-              />
-            }
-          />
-
-          <Route
-            path="/stress"
-            element={
-              <StressAnalysis
-                onPrediction={setStressPrediction}
-              />
-            }
-          />
-
-          <Route
-            path="/reports"
-            element={
-              <Reports
-                activePatient={activePatient}
-                miPrediction={miPrediction}
-                stressPrediction={stressPrediction}
-              />
-            }
-          />
-
-          <Route
-            path="/settings"
-            element={<Settings />}
-          />
-
-        </Routes>
-
-      </div>
-
-    </div>
-  );
-}
-
+function Placeholder({ title, text }) { return <main className="page placeholder-page"><p className="eyebrow">NEURAHEAL MODULE</p><h1>{title}</h1><p className="muted">{text}</p><div className="panel placeholder-panel">This workspace is ready for your next research session.</div></main>; }
+function App() { const location = useLocation(); const [prediction, setPrediction] = useState(null); return <div className="layout"><Sidebar /><div className="main">{location.pathname !== "/" && <Header /> }<Routes><Route path="/" element={<Dashboard />} /><Route path="/eeg" element={<EEGMonitor onPrediction={setPrediction} />} /><Route path="/reports" element={<Reports miPrediction={prediction} />} /><Route path="/settings" element={<Settings />} /><Route path="/rehabilitation" element={<Placeholder title="Rehabilitation workspace" text="Turn motor imagery classifications into guided visual feedback for BCI-assisted rehabilitation research." />} /><Route path="/about" element={<Placeholder title="About NeuraHeal" text="Reconnect. Recover. Rehabilitate. A research-grade interface for exploring EEG-based motor imagery." />} /></Routes></div></div>; }
 export default App;
