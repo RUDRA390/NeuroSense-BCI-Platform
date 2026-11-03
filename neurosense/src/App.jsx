@@ -15,7 +15,7 @@ import "./App.css";
 
 function App() {
   const location = useLocation();
-  const [eegData, setEegData] = useState({
+  const [eegData] = useState({
     status: "🟢 Connected",
     load: "Optimal",
     attention: "87%",

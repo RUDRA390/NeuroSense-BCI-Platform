@@ -20,9 +20,9 @@ function EEGMonitor({ onPrediction, activePatient }) {
     setLoading(true);
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+      const API_URL = import.meta.env.VITE_API_URL || "/api";
 
-const response = await fetch(`${API_URL}/predict`, {
+      const response = await fetch(`${API_URL}/predict`, {
         method: "POST",
         body: formData,
       });
@@ -38,7 +38,7 @@ const response = await fetch(`${API_URL}/predict`, {
           onPrediction(data);
         }
       }
-    } catch (err) {
+    } catch {
       alert("Cannot connect to Flask backend.");
     }
 
